@@ -7,7 +7,7 @@
                 <h1 class="display-5 fw-bold mb-3">Peringatan Potensi Banjir yang modern, transparan, dan mudah digunakan.</h1>
                 <p class="lead mb-4">Aplikasi akademik berbasis PHP Native + MySQL untuk menganalisis 7 variabel, 22 gejala, dan 34 rule hingga menghasilkan diagnosis RENDAH, SEDANG, TINGGI, atau SANGAT TINGGI.</p>
                 <div class="d-flex flex-wrap gap-2">
-                    <a class="btn btn-light btn-lg" href="konsultasi/index.php"><i class="bi bi-play-circle me-2"></i>Mulai Konsultasi</a>
+                    <a class="btn btn-light btn-lg" href="<?=app_url('konsultasi/index.php')?>"><i class="bi bi-play-circle me-2"></i>Mulai Konsultasi</a>
                     <a class="btn btn-outline-light btn-lg" href="#fitur"><i class="bi bi-diagram-3 me-2"></i>Lihat Alur</a>
                 </div>
             </div>
