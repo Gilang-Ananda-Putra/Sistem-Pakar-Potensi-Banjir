@@ -11,9 +11,19 @@ verify_csrf();
 $selected = $_POST['symptom'] ?? [];
 $location = trim((string) ($_POST['location'] ?? ''));
 $notes = trim((string) ($_POST['notes'] ?? ''));
+$user = current_user();
+$userId = (int) ($user['id'] ?? 0);
 
 if ($location === '' || mb_strlen($location) > 150) {
     exit('Lokasi wajib diisi dan maksimal 150 karakter.');
+}
+
+$userStmt = $pdo->prepare('SELECT id FROM users WHERE id=? AND is_active=1');
+$userStmt->execute([$userId]);
+if (!$userStmt->fetchColumn()) {
+    session_destroy();
+    http_response_code(403);
+    exit('Sesi pengguna tidak valid atau akun sudah nonaktif. Silakan login ulang.');
 }
 
 $variableIds = $pdo->query('SELECT id FROM variables ORDER BY id')->fetchAll(PDO::FETCH_COLUMN);
@@ -35,7 +45,7 @@ try {
     $pdo->beginTransaction();
     $fc = forward_chaining($pdo, array_values($validPairs));
 
-    $pdo->prepare('INSERT INTO consultations(user_id,location,notes) VALUES(?,?,?)')->execute([current_user()['id'], $location, $notes]);
+    $pdo->prepare('INSERT INTO consultations(user_id,location,notes) VALUES(?,?,?)')->execute([$userId, $location, $notes]);
     $cid = (int) $pdo->lastInsertId();
 
     $detailStmt = $pdo->prepare('INSERT INTO consultation_details(consultation_id,variable_id,symptom_id) VALUES(?,?,?)');
@@ -48,10 +58,10 @@ try {
         $cid,
         $res['id'],
         $res['diagnosis'],
-        json_encode($fc['working_memory'], JSON_UNESCAPED_UNICODE),
-        json_encode(array_column($fc['active_rules'], 'code'), JSON_UNESCAPED_UNICODE),
-        json_encode(array_column($fc['failed_rules'], 'code'), JSON_UNESCAPED_UNICODE),
-        json_encode($fc['trace'], JSON_UNESCAPED_UNICODE),
+        json_encode($fc['working_memory'], JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR),
+        json_encode(array_column($fc['active_rules'], 'code'), JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR),
+        json_encode(array_column($fc['failed_rules'], 'code'), JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR),
+        json_encode($fc['trace'], JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR),
         $res['explanation'],
         $res['recommendation'],
     ]);
@@ -63,6 +73,8 @@ try {
     if ($pdo->inTransaction()) {
         $pdo->rollBack();
     }
+    $errorId = bin2hex(random_bytes(4));
+    error_log(sprintf('[consultation:%s] %s in %s:%d', $errorId, $e->getMessage(), $e->getFile(), $e->getLine()));
     http_response_code(500);
-    exit('Konsultasi gagal disimpan. Silakan coba lagi.');
+    exit('Konsultasi gagal disimpan. Silakan coba lagi. Kode error: ' . $errorId);
 }
