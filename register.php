@@ -63,41 +63,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 require_once __DIR__.'/includes/header.php';
 ?>
-<div class="container col-md-6 col-lg-5">
-    <div class="card p-4">
-        <h3 class="mb-3">Buat Akun</h3>
-        <p class="text-muted">Daftar sebagai pengguna untuk mulai konsultasi dan menyimpan riwayat hasil diagnosa.</p>
-
-        <?php if($errors): ?>
-            <div class="alert alert-danger">
-                <ul class="mb-0">
-                    <?php foreach($errors as $error): ?>
-                        <li><?=e($error)?></li>
-                    <?php endforeach; ?>
-                </ul>
-            </div>
-        <?php endif; ?>
-
-        <form method="post">
-            <div class="mb-3">
-                <label>Nama Lengkap</label>
-                <input class="form-control" name="name" value="<?=e($name)?>" required>
-            </div>
-            <div class="mb-3">
-                <label>Email</label>
-                <input class="form-control" name="email" type="email" value="<?=e($email)?>" required>
-            </div>
-            <div class="mb-3">
-                <label>Password</label>
-                <input class="form-control" name="password" type="password" minlength="6" required>
-            </div>
-            <div class="mb-3">
-                <label>Konfirmasi Password</label>
-                <input class="form-control" name="password_confirm" type="password" minlength="6" required>
-            </div>
-            <button class="btn btn-primary w-100">Daftar</button>
-        </form>
-        <p class="text-center mt-3 mb-0">Sudah punya akun? <a href="/Sistem-Pakar-Potensi-Banjir/login.php">Login di sini</a>.</p>
-    </div>
-</div>
+<div class="container px-3 px-lg-4 auth-shell"><div class="row justify-content-center"><div class="col-lg-7"><div class="card p-4 p-lg-5"><span class="badge text-bg-primary rounded-pill align-self-start mb-3">Akun Pengguna</span><h3 class="section-title mb-2">Buat Akun</h3><p class="text-muted">Daftar untuk mulai konsultasi dan menyimpan riwayat hasil diagnosa.</p><?php if($errors): ?><div class="alert alert-danger rounded-4"><ul class="mb-0"><?php foreach($errors as $error): ?><li><?=e($error)?></li><?php endforeach; ?></ul></div><?php endif; ?><form method="post"><div class="mb-3"><label class="form-label fw-semibold">Nama Lengkap</label><input class="form-control" name="name" value="<?=e($name)?>" required></div><div class="mb-3"><label class="form-label fw-semibold">Email</label><input class="form-control" name="email" type="email" value="<?=e($email)?>" required></div><div class="row g-3"><div class="col-md-6"><label class="form-label fw-semibold">Password</label><input class="form-control" name="password" type="password" minlength="6" required></div><div class="col-md-6"><label class="form-label fw-semibold">Konfirmasi Password</label><input class="form-control" name="password_confirm" type="password" minlength="6" required></div></div><button class="btn btn-primary w-100 py-2 mt-4">Daftar</button></form><p class="text-center mt-3 mb-0">Sudah punya akun? <a href="/Sistem-Pakar-Potensi-Banjir/login.php">Login</a>.</p></div></div></div></div>
 <?php require_once __DIR__.'/includes/footer.php'; ?>
