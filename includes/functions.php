@@ -1,9 +1,24 @@
 <?php
 if (session_status() !== PHP_SESSION_ACTIVE) {
+    ini_set('session.use_strict_mode', '1');
     session_start();
 }
 
-const APP_BASE_PATH = '/Sistem-Pakar-Potensi-Banjir';
+$configuredBasePath = getenv('APP_BASE_PATH');
+if ($configuredBasePath === false || $configuredBasePath === '') {
+    $scriptName = str_replace('\\', '/', $_SERVER['SCRIPT_NAME'] ?? '');
+    $projectRoot = dirname($scriptName);
+    foreach (['/admin/dashboard', '/admin/master', '/konsultasi', '/hasil', '/laporan'] as $segment) {
+        if (str_ends_with($projectRoot, $segment)) {
+            $projectRoot = substr($projectRoot, 0, -strlen($segment));
+            break;
+        }
+    }
+    $configuredBasePath = $projectRoot === '/' || $projectRoot === '.' ? '' : rtrim($projectRoot, '/');
+}
+
+define('APP_BASE_PATH', rtrim($configuredBasePath, '/'));
+
 const FLOOD_LEVELS = ['Rendah', 'Sedang', 'Tinggi', 'Sangat Tinggi'];
 
 function e($v): string
@@ -62,6 +77,45 @@ function verify_csrf(): void
         http_response_code(419);
         exit('Sesi form tidak valid. Silakan muat ulang halaman.');
     }
+}
+
+
+function post_string(string $key, int $max = 255, bool $required = true): string
+{
+    $value = trim((string) ($_POST[$key] ?? ''));
+    if ($required && $value === '') {
+        throw new InvalidArgumentException('Field wajib belum lengkap.');
+    }
+    if (mb_strlen($value) > $max) {
+        throw new InvalidArgumentException('Input melebihi batas panjang yang diizinkan.');
+    }
+    return $value;
+}
+
+function post_int(string $key, int $min = 1): int
+{
+    $value = filter_input(INPUT_POST, $key, FILTER_VALIDATE_INT);
+    if ($value === false || $value === null || $value < $min) {
+        throw new InvalidArgumentException('Input angka tidak valid.');
+    }
+    return (int) $value;
+}
+
+function valid_flood_level(string $diagnosis): bool
+{
+    return in_array($diagnosis, FLOOD_LEVELS, true);
+}
+
+function flash_set(string $type, string $message): void
+{
+    $_SESSION['flash'] = ['type' => $type, 'message' => $message];
+}
+
+function flash_get(): ?array
+{
+    $flash = $_SESSION['flash'] ?? null;
+    unset($_SESSION['flash']);
+    return $flash;
 }
 
 function ensure_owner_or_admin(array $row, string $userIdColumn = 'user_id'): void

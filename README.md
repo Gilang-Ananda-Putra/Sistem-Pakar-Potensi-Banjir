@@ -35,3 +35,7 @@ Aplikasi PHP Native + MySQL untuk Sistem Pakar Peringatan Potensi Banjir dengan 
 
 ## Menambah Rule atau Gejala
 Lihat panduan lengkap di `docs/audit-refactor.md` agar penambahan tetap konsisten dengan struktur knowledge base dan rule base akademik.
+
+## Panduan Finalisasi & Demo
+
+Dokumentasi tahap akhir, checklist deployment, skenario demo, dan panduan presentasi tersedia di `docs/finalization-guide.md`.
