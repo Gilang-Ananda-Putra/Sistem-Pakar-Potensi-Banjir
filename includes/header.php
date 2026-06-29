@@ -1,6 +1,6 @@
 <?php require_once __DIR__.'/functions.php'; ?>
 <?php
-$basePath = '/Sistem-Pakar-Potensi-Banjir';
+$basePath = APP_BASE_PATH;
 $user = current_user();
 $isAdmin = ($user['role_name'] ?? '') === 'admin';
 $currentPath = $_SERVER['PHP_SELF'] ?? '';
