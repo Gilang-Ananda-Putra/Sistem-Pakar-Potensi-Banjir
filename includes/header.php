@@ -12,6 +12,9 @@ function nav_active($needle){ return str_contains($_SERVER['PHP_SELF'] ?? '', $n
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Sistem Pakar Peringatan Potensi Banjir</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <link href="<?= $basePath ?>/assets/css/style.css" rel="stylesheet">
@@ -22,7 +25,7 @@ function nav_active($needle){ return str_contains($_SERVER['PHP_SELF'] ?? '', $n
     <div class="container-fluid px-3 px-lg-4">
         <a class="navbar-brand d-flex align-items-center gap-2" href="<?= $basePath ?>/index.php">
             <span class="brand-mark"><i class="bi bi-cloud-rain-heavy-fill"></i></span>
-            <span>Pakar Banjir</span>
+            <span>Pakar<span class="text-primary">Banjir</span></span>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav"><span class="navbar-toggler-icon"></span></button>
         <div id="nav" class="collapse navbar-collapse">
@@ -41,7 +44,7 @@ function nav_active($needle){ return str_contains($_SERVER['PHP_SELF'] ?? '', $n
                     </li>
                 <?php else: ?>
                     <li class="nav-item"><a class="nav-link" href="<?= $basePath ?>/login.php">Login</a></li>
-                    <li class="nav-item"><a class="btn btn-light btn-sm rounded-pill px-3" href="<?= $basePath ?>/register.php">Buat Akun</a></li>
+                    <li class="nav-item"><a class="btn btn-primary btn-sm rounded-pill px-3" href="<?= $basePath ?>/register.php">Buat Akun</a></li>
                 <?php endif; ?>
                 <li class="nav-item"><button class="btn btn-icon" type="button" data-theme-toggle aria-label="Toggle dark mode"><i class="bi bi-moon-stars"></i></button></li>
             </ul>
