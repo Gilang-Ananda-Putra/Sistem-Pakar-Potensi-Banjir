@@ -6,7 +6,7 @@ Aplikasi PHP Native + MySQL untuk Sistem Pakar Peringatan Potensi Banjir dengan 
 - Login admin/user dengan role-based access.
 - Dashboard statistik dan grafik Chart.js.
 - CRUD variabel, knowledge base/gejala, rule base, dan pengguna.
-- Konsultasi berbasis 7 variabel dan 25 gejala.
+- Konsultasi berbasis 7 variabel dan 22 gejala.
 - Mesin inferensi Forward Chaining murni: working memory, rule aktif/gagal, urutan inferensi, dan hasil diagnosis.
 - Riwayat konsultasi, filter, print, export CSV/Excel sederhana.
 - Dokumentasi ERD, UML, flowchart, dan flow aplikasi di folder `docs/`.
@@ -21,4 +21,4 @@ Aplikasi PHP Native + MySQL untuk Sistem Pakar Peringatan Potensi Banjir dengan 
 - Admin: `admin@banjir.local` / `password`
 - User: `user@banjir.local` / `password`
 
-> Catatan: dataset knowledge base dan 20 rule disediakan dalam SQL seed agar jumlah variabel, gejala, rule, dan output sesuai prompt.
+> Catatan: dataset knowledge base dan 34 rule disediakan dalam SQL seed agar jumlah variabel, gejala, rule, dan output sesuai prompt.
